@@ -1,0 +1,14 @@
+.header {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  font-size: 22px;
+}
+
+.link:hover {
+  color: darkgreen;
+}
