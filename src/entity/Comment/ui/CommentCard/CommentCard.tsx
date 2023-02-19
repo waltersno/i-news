@@ -1,6 +1,9 @@
 import { Dispatch, FC, RefObject, SetStateAction, useEffect, useState } from 'react';
-import { fetchChildCommentsApi } from 'shared/api/comments';
+import { deleteChildComment, fetchChildCommentsApi, reduceReplyCount } from 'shared/api/comments';
+import { ERoles } from 'shared/constants/roles';
+import { useAuth } from 'shared/hooks/useAuth';
 import { IChildrenComment } from 'shared/types/comments';
+
 import classes from './CommentCard.module.css';
 
 interface ICommentCard {
@@ -8,9 +11,11 @@ interface ICommentCard {
   body: string;
   childrenCount: number;
   id: number;
+  formRef: RefObject<HTMLTextAreaElement>;
   setCommentValue: Dispatch<SetStateAction<string>>;
   setReplyCommentId: Dispatch<SetStateAction<number | null>>;
-  formRef: RefObject<HTMLTextAreaElement>;
+  handleDeleteComment: (id: number) => void;
+  fetchAllComments: () => void;
 }
 
 export const CommentCard: FC<ICommentCard> = ({
@@ -21,9 +26,12 @@ export const CommentCard: FC<ICommentCard> = ({
   formRef,
   setCommentValue,
   setReplyCommentId,
+  handleDeleteComment,
+  fetchAllComments,
 }) => {
   const [showChildrenComments, setShowChildrenComments] = useState(false);
   const [childComments, setChildComments] = useState<IChildrenComment[]>([]);
+  const { user } = useAuth();
 
   const fetchChildComments = () => {
     fetchChildCommentsApi(id).then((data) => {
@@ -38,21 +46,26 @@ export const CommentCard: FC<ICommentCard> = ({
   }, [showChildrenComments]);
 
   useEffect(() => {
-    fetchChildComments();
+    if (showChildrenComments) {
+      fetchChildComments();
+    }
   }, [childrenCount]);
 
   const toggleChildrenComments = () => {
     setShowChildrenComments((prev) => !prev);
   };
 
-  useEffect(() => {
-    fetchChildComments();
-  }, [childrenCount]);
-
   const handleReplyToComment = (author: string) => {
     formRef.current?.focus();
     setCommentValue(`@${author}`);
     setReplyCommentId(id);
+  };
+
+  const handleDeleteChildComment = async (childCommentId: number) => {
+    await reduceReplyCount(id);
+    deleteChildComment(childCommentId).then(() => {
+      fetchAllComments();
+    });
   };
 
   return (
@@ -72,6 +85,12 @@ export const CommentCard: FC<ICommentCard> = ({
         <button onClick={() => handleReplyToComment(author)} className={classes.greenButton}>
           Ответить
         </button>
+
+        {user?.role === ERoles.Admin && (
+          <button className={classes.dangerButton} onClick={() => handleDeleteComment(id)}>
+            Удалить
+          </button>
+        )}
       </div>
 
       {childrenCount >= 1 && showChildrenComments && (
@@ -83,12 +102,23 @@ export const CommentCard: FC<ICommentCard> = ({
                   <h3>{author}</h3>
                   <p>{body}</p>
                 </div>
-                <button
-                  className={classes.greenButton}
-                  onClick={() => handleReplyToComment(author)}
-                >
-                  Ответить
-                </button>
+                <div className={classes.childCommentActions}>
+                  <button
+                    className={classes.greenButton}
+                    onClick={() => handleReplyToComment(author)}
+                  >
+                    Ответить
+                  </button>
+                  {user?.role === ERoles.Admin && (
+                    <button
+                      className={classes.dangerButton}
+                      onClick={() => handleDeleteChildComment(id)}
+                      color='danger'
+                    >
+                      Удалить
+                    </button>
+                  )}
+                </div>
               </li>
             );
           })}

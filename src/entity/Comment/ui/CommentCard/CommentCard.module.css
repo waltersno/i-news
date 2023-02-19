@@ -4,6 +4,17 @@
   gap: 1rem;
 }
 
+.commentHead {
+  display: flex;
+  justify-content: space-between;
+}
+
+.commentHead button {
+  width: 100px;
+  color: #fff;
+  padding: 0.5rem;
+}
+
 .childComments {
   margin-left: 2rem;
   display: flex;
@@ -19,6 +30,7 @@
 
 .childCommentCard > button {
   align-self: flex-start;
+  max-width: 100px;
 }
 
 .commentActions {
@@ -30,4 +42,16 @@
   background: chartreuse;
   padding: 0.3rem;
   border-radius: 6px;
+}
+
+.dangerButton {
+  background: #f34f6d;
+  padding: 0.3rem;
+  border-radius: 6px;
+  color: #fff;
+}
+
+.childCommentActions {
+  display: flex;
+  gap: 0.7rem;
 }

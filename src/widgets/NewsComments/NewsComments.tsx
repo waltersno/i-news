@@ -1,8 +1,17 @@
 import { CommentCard } from 'entity/Comment/ui/CommentCard/CommentCard';
-import { ChangeEventHandler, FC, MouseEventHandler, useEffect, useRef, useState } from 'react';
+import {
+  ChangeEventHandler,
+  FC,
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   createCommentToNews,
   createCommentToParentComment,
+  deleteParentComment,
   getCommentsByNewsId,
   increaseReplyCount,
 } from 'shared/api/comments';
@@ -23,11 +32,11 @@ export const NewsComments: FC<INewsComments> = ({ newsId }) => {
   const formRef = useRef<HTMLTextAreaElement>(null);
   const { user } = useAuth();
 
-  const fetchAllComments = () => {
+  const fetchAllComments = useCallback(() => {
     getCommentsByNewsId(newsId).then((resComments) => {
       setComments(resComments);
     });
-  };
+  }, []);
 
   useEffect(() => {
     fetchAllComments();
@@ -63,11 +72,20 @@ export const NewsComments: FC<INewsComments> = ({ newsId }) => {
   };
 
   const handleOnChangeCommentValue: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
-    if (event.target.value === '') {
-      setReplyCommentId(null);
-    }
     setCommentValue(event.target.value);
   };
+
+  useEffect(() => {
+    if (commentValue === '') {
+      setReplyCommentId(null);
+    }
+  }, [commentValue]);
+
+  const handleDeleteComment = useCallback((id: number) => {
+    deleteParentComment(id).then(() => {
+      fetchAllComments();
+    });
+  }, []);
 
   if (!comments) {
     return <h3>Загрузка...</h3>;
@@ -90,6 +108,7 @@ export const NewsComments: FC<INewsComments> = ({ newsId }) => {
           {comments.map(({ author, body, id, childrenCount }) => (
             <li key={id}>
               <CommentCard
+                handleDeleteComment={handleDeleteComment}
                 formRef={formRef}
                 setCommentValue={setCommentValue}
                 setReplyCommentId={setReplyCommentId}
@@ -97,6 +116,7 @@ export const NewsComments: FC<INewsComments> = ({ newsId }) => {
                 author={author}
                 body={body}
                 childrenCount={childrenCount}
+                fetchAllComments={fetchAllComments}
               />
             </li>
           ))}

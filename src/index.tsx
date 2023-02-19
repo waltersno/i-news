@@ -1,4 +1,3 @@
-import { AuthContext } from 'app/providers/auth-provider';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
