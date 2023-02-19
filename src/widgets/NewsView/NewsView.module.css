@@ -3,3 +3,18 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+
+.newsImage {
+  height: 600px;
+  border-radius: 15px;
+}
+
+.button {
+  display: flex;
+  font-size: 16px;
+  background-color: var(--gray10);
+  width: fit-content;
+  padding: 0.8rem;
+  border-radius: 10px;
+  align-self: center;
+}

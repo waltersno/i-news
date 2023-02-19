@@ -111,7 +111,14 @@
       "id": 1,
       "author": "Almas Dakenov",
       "body": "Новость к прочтению!",
-      "newsId": 1
+      "newsId": 1,
+      "children": [
+        {
+          "id": 1,
+          "author": "Dias",
+          "body": "Отличная новость"
+        }
+      ]
     }
   ]
 }

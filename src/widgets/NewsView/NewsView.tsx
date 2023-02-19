@@ -9,7 +9,6 @@ import classes from './NewsView.module.css';
 export const NewsView = () => {
   const [newsData, setNewsData] = useState<INews | null>(null);
   const { newsId } = useParams();
-  const [comments, setComments] = useState([]);
   const [isVisibleComments, setIsVisibleComments] = useState(false);
 
   const toggleComments = () => {
@@ -29,13 +28,14 @@ export const NewsView = () => {
   return (
     <div className={classes.wrapper}>
       <h3>{newsData.title}</h3>
+      <img className={classes.newsImage} src={newsData.image} alt={newsData.title}/>
       <p>{newsData.body}</p>
       {!isVisibleComments && (
-        <button type='button' onClick={toggleComments}>
+        <button className={classes.button} type='button' onClick={toggleComments}>
           Показать комментарий
         </button>
       )}
-      {isVisibleComments && <NewsComments />}
+      {isVisibleComments && <NewsComments newsId={newsId as string}/>}
     </div>
   );
 };

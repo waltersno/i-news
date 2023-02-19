@@ -22,3 +22,7 @@ button {
   outline: none;
   background-color: transparent;
 }
+
+:root {
+  --gray10: #a1a1a1;
+}
