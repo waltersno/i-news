@@ -3,5 +3,9 @@ export interface IComment {
   newsId: number;
   author: string;
   body: string;
-  children: Omit<IComment, 'children'>[];
+  childrenCount: number;
 }
+
+export type IChildrenComment = Pick<IComment, 'author' | 'body' | 'id'> & {
+  commentId: number;
+};

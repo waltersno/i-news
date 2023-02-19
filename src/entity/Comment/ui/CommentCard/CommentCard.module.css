@@ -1,0 +1,33 @@
+.parentComment {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.childComments {
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.childCommentCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.childCommentCard > button {
+  align-self: flex-start;
+}
+
+.commentActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.greenButton {
+  background: chartreuse;
+  padding: 0.3rem;
+  border-radius: 6px;
+}

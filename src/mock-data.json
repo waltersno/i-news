@@ -112,13 +112,180 @@
       "author": "Almas Dakenov",
       "body": "Новость к прочтению!",
       "newsId": 1,
-      "children": [
-        {
-          "id": 1,
-          "author": "Dias",
-          "body": "Отличная новость"
-        }
-      ]
+      "childrenCount": 7
+    },
+    {
+      "author": "New User",
+      "body": "my new comment",
+      "newsId": "1",
+      "id": 2,
+      "childrenCount": 2
+    },
+    {
+      "author": "New User",
+      "body": "created comment",
+      "newsId": "1",
+      "id": 3,
+      "childrenCount": 0
+    },
+    {
+      "author": "admin",
+      "body": "admin comment here",
+      "newsId": "2",
+      "id": 4,
+      "childrenCount": 1
+    },
+    {
+      "author": "admin",
+      "body": "Не смог прочитать до конца",
+      "newsId": "1",
+      "id": 5,
+      "childrenCount": 3
+    },
+    {
+      "author": "admin",
+      "body": "eche raz",
+      "newsId": "1",
+      "id": 6,
+      "childrenCount": 0
+    },
+    {
+      "author": "admin",
+      "body": "my new comment",
+      "newsId": "1",
+      "childrenCount": 0,
+      "id": 7
+    },
+    {
+      "author": "admin",
+      "body": "@New User",
+      "newsId": "1",
+      "childrenCount": 0,
+      "id": 8
+    },
+    {
+      "author": "admin",
+      "body": "asdas",
+      "newsId": "2",
+      "childrenCount": 0,
+      "id": 9
+    },
+    {
+      "author": "admin",
+      "body": "first comment\n",
+      "newsId": "3",
+      "childrenCount": 5,
+      "id": 10
+    }
+  ],
+  "childrenComments": [
+    {
+      "author": "admin",
+      "body": "@Almas Dakenov reply",
+      "commentId": "1",
+      "id": 1
+    },
+    {
+      "author": "admin",
+      "body": "@admin",
+      "commentId": "1",
+      "id": 2
+    },
+    {
+      "author": "admin",
+      "body": "@admin reply",
+      "commentId": "1",
+      "id": 3
+    },
+    {
+      "author": "admin",
+      "body": "@admin anser",
+      "commentId": "4",
+      "id": 4
+    },
+    {
+      "author": "admin",
+      "body": "@New User reply new",
+      "commentId": "2",
+      "id": 5
+    },
+    {
+      "author": "admin",
+      "body": "@admin reply it",
+      "commentId": "2",
+      "id": 6
+    },
+    {
+      "author": "admin",
+      "body": "@Almas Dakenov",
+      "commentId": "1",
+      "id": 7
+    },
+    {
+      "author": "admin",
+      "body": " @Almas Dakenov asd",
+      "commentId": "1",
+      "id": 8
+    },
+    {
+      "author": "admin",
+      "body": "@admin what a comment!",
+      "commentId": "10",
+      "id": 9
+    },
+    {
+      "author": "admin",
+      "body": "@admin sd",
+      "commentId": "10",
+      "id": 10
+    },
+    {
+      "author": "admin",
+      "body": "@admin sd",
+      "commentId": "10",
+      "id": 11
+    },
+    {
+      "author": "admin",
+      "body": "@admin sd sad",
+      "commentId": "10",
+      "id": 12
+    },
+    {
+      "author": "admin",
+      "body": "@admin sd sad asd",
+      "commentId": "10",
+      "id": 13
+    },
+    {
+      "author": "admin",
+      "body": "@admin new comment to admin",
+      "commentId": "5",
+      "id": 14
+    },
+    {
+      "author": "admin",
+      "body": "@admin new comment to admin",
+      "commentId": "5",
+      "id": 15
+    },
+    {
+      "author": "admin",
+      "body": "@admin new comment to admin",
+      "commentId": "5",
+      "id": 16
+    },
+    {
+      "author": "admin",
+      "body": "@Almas Dakenov reply",
+      "commentId": "1",
+      "id": 17
+    },
+    {
+      "author": "admin",
+      "body": "@admin what happening",
+      "commentId": "1",
+      "id": 18
     }
   ],
   "users": [

@@ -1,7 +1,14 @@
 import { CommentCard } from 'entity/Comment/ui/CommentCard/CommentCard';
-import { FC, useEffect, useState } from 'react';
-import { getCommentsByNewsId } from 'shared/api/comments';
+import { ChangeEventHandler, FC, MouseEventHandler, useEffect, useRef, useState } from 'react';
+import {
+  createCommentToNews,
+  createCommentToParentComment,
+  getCommentsByNewsId,
+  increaseReplyCount,
+} from 'shared/api/comments';
+import { useAuth } from 'shared/hooks/useAuth';
 import { IComment } from 'shared/types/comments';
+import { CommentForm } from 'widgets/CommentForm/CommentForm';
 
 import classes from './NewsComments.module.css';
 
@@ -10,13 +17,57 @@ interface INewsComments {
 }
 
 export const NewsComments: FC<INewsComments> = ({ newsId }) => {
+  const [replyCommentId, setReplyCommentId] = useState<number | null>(null);
   const [comments, setComments] = useState<IComment[] | null>(null);
+  const [commentValue, setCommentValue] = useState('');
+  const formRef = useRef<HTMLTextAreaElement>(null);
+  const { user } = useAuth();
 
-  useEffect(() => {
+  const fetchAllComments = () => {
     getCommentsByNewsId(newsId).then((resComments) => {
       setComments(resComments);
     });
+  };
+
+  useEffect(() => {
+    fetchAllComments();
   }, []);
+
+  const createCommentHandle: MouseEventHandler<HTMLButtonElement> = async (event) => {
+    event.preventDefault();
+    if (commentValue.length < 2) {
+      return;
+    }
+
+    if (replyCommentId) {
+      await createCommentToParentComment(replyCommentId, {
+        author: user?.login as string,
+        body: commentValue,
+      });
+
+      await increaseReplyCount(replyCommentId);
+      fetchAllComments();
+      setCommentValue('');
+      return;
+    }
+
+    createCommentToNews(newsId, {
+      author: user?.login as string,
+      body: commentValue,
+      newsId: +newsId,
+      childrenCount: 0,
+    }).then(() => {
+      fetchAllComments();
+      setCommentValue('');
+    });
+  };
+
+  const handleOnChangeCommentValue: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+    if (event.target.value === '') {
+      setReplyCommentId(null);
+    }
+    setCommentValue(event.target.value);
+  };
 
   if (!comments) {
     return <h3>Загрузка...</h3>;
@@ -25,22 +76,28 @@ export const NewsComments: FC<INewsComments> = ({ newsId }) => {
   return (
     <div>
       <h3 className={classes.head}>Комментарий:</h3>
+      <CommentForm
+        formRef={formRef}
+        commentValue={commentValue}
+        createCommentHandle={createCommentHandle}
+        handleOnChangeCommentValue={handleOnChangeCommentValue}
+      />
+
       {comments.length === 0 ? (
         <h3>Нету комментариев!</h3>
       ) : (
-        <ul>
-          {comments.map(({ author, body, id, children }) => (
+        <ul className={classes.commentsWrapper}>
+          {comments.map(({ author, body, id, childrenCount }) => (
             <li key={id}>
-              <CommentCard author={author} body={body} />
-              <ul className={classes.childComments}>
-                {children?.map(({ author, body, id }) => {
-                  return (
-                    <li key={id}>
-                      <CommentCard author={author} body={body} />
-                    </li>
-                  );
-                })}
-              </ul>
+              <CommentCard
+                formRef={formRef}
+                setCommentValue={setCommentValue}
+                setReplyCommentId={setReplyCommentId}
+                id={id}
+                author={author}
+                body={body}
+                childrenCount={childrenCount}
+              />
             </li>
           ))}
         </ul>
