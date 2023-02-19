@@ -5,7 +5,7 @@ import { useAuth } from 'shared/hooks/useAuth';
 import classes from './Header.module.css';
 
 export const Header = () => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <header className={classes.header}>
@@ -19,6 +19,7 @@ export const Header = () => {
         </ul>
       </nav>
       <div className={classes.profile}>
+        <span>{user?.login}</span>
         <img src={images.avatarIcon} alt='' />
         <div className={classes.profileDropdown}>
           <button className={classes.logoutButton} type='button' onClick={logout}>

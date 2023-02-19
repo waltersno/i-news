@@ -125,12 +125,38 @@
     {
       "login": "admin",
       "password": "Qwertys1",
-      "role": "admin"
+      "role": "admin",
+      "id": 1
     },
     {
       "login": "Almas",
       "password": "Qwertys1",
-      "role": "user"
+      "role": "user",
+      "id": 2
+    },
+    {
+      "login": "new User",
+      "password": "Qwertys2",
+      "role": "user",
+      "id": 4
+    },
+    {
+      "login": "snew User",
+      "password": "Qwertys2",
+      "role": "user",
+      "id": 5
+    },
+    {
+      "login": "Almas Dakenov",
+      "password": "Qwertys2",
+      "role": "user",
+      "id": 6
+    },
+    {
+      "login": "New User",
+      "password": "Qwertys2",
+      "role": "user",
+      "id": 7
     }
   ]
 }

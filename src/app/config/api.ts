@@ -6,10 +6,17 @@ export const api = async <T>(
   body?: Record<string, any>,
   method = 'GET',
 ): Promise<T> => {
-  const response = await fetch(`${BASE_URL}/${url}?${params ? new URLSearchParams(params) : ''}`, {
-    method,
-    body: JSON.stringify(body),
-  });
+  const response = await fetch(
+    `${BASE_URL}/${url}${params ? `?${new URLSearchParams(params)}` : ''}`,
+    {
+      method,
+      body: JSON.stringify(body),
+      headers: {
+        'content-type': 'application/json',
+      },
+    },
+  );
+
   if (!response.ok) {
     // TODO: обрабатывать ошибки по другому
     console.error(response.statusText);

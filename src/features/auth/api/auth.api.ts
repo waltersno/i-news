@@ -1,9 +1,10 @@
 import { api } from 'app/config/api';
 import { IUser } from 'shared/types/user';
 
-export const loginApi = (login: string) =>
+export const getUserByLogin = (login: string) =>
   api<IUser[]>(`users`, {
     login,
   });
 
-export const register = (userData: IUser) => api(`users`, undefined, userData, 'POST');
+export const registerApi = (userData: IUser) =>
+  api<IUser & { id: number }>(`users`, undefined, userData, 'POST');

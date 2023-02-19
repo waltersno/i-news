@@ -3,7 +3,7 @@ import { MouseEventHandler, useState } from 'react';
 import { Button } from 'shared/ui/Button';
 import { Spin } from 'shared/ui/Spin';
 import { useForm } from 'shared/hooks/useForm';
-import { loginApi } from 'features/auth/api/auth.api';
+import { getUserByLogin, registerApi } from 'features/auth/api/auth.api';
 
 import { useAuth } from 'shared/hooks/useAuth';
 import { FormItem } from '../FormItem/FormItem';
@@ -16,7 +16,7 @@ export const Form = () => {
   const { login } = useAuth();
 
   const loginHandle = () => {
-    loginApi(values.login as string)
+    getUserByLogin(values.login as string)
       .then((data) => {
         if (data[0].password === values.password) {
           login(data[0]);
@@ -32,8 +32,23 @@ export const Form = () => {
       });
   };
 
-  const signUpHandle = () => {
-    console.log('sdsa');
+  const signUpHandle = async () => {
+    const data = await getUserByLogin(values.login as string);
+    if (data.length !== 0) {
+      alert('Пользователь уже существует');
+      setIsLoading(false);
+      return;
+    }
+
+    const userData = {
+      ...values,
+      role: 'user',
+    };
+
+    const response = await registerApi(userData);
+    const { id, ...createdUser } = response;
+    login(createdUser);
+    setIsLoading(false);
   };
 
   const handleSubmit: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -46,6 +61,8 @@ export const Form = () => {
     setIsLoading(true);
     if (event.currentTarget.name === 'login-submit') {
       loginHandle();
+    } else {
+      signUpHandle();
     }
   };
 

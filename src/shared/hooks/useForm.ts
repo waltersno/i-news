@@ -1,13 +1,16 @@
-import React, { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 interface IFormValues {
-  login?: string;
-  password?: string;
+  login: string;
+  password: string;
 }
 
 export const useForm = () => {
-  const [values, setValues] = useState<IFormValues>({});
-  const [errors, setErrors] = useState<IFormValues>({});
+  const [values, setValues] = useState<IFormValues>({
+    login: '',
+    password: '',
+  });
+  const [errors, setErrors] = useState<Partial<IFormValues>>({});
 
   const validate = (name: string, value: string) => {
     switch (name) {
