@@ -1,5 +1,5 @@
 import { AuthContext } from 'app/providers/auth-provider';
-import { Form } from 'features/auth/ui/AuthForm';
+import { Form } from 'features/auth/ui/AuthForm/Form';
 import { AuthWrapper } from 'features/auth/ui/AuthWrapper/AppWrapper';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
