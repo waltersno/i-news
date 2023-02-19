@@ -1,7 +1,7 @@
 import { api } from 'app/config/api';
 import { IUser } from 'shared/types/user';
 
-export const login = (login: string) =>
+export const loginApi = (login: string) =>
   api<IUser[]>(`users`, {
     login,
   });

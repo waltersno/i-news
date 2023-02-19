@@ -3,30 +3,33 @@ import { MouseEventHandler, useState } from 'react';
 import { Button } from 'shared/ui/Button';
 import { Spin } from 'shared/ui/Spin';
 import { useForm } from 'shared/hooks/useForm';
-import { login } from 'features/auth/api/auth.api';
+import { loginApi } from 'features/auth/api/auth.api';
 
-
+import { useAuth } from 'shared/hooks/useAuth';
 import { FormItem } from '../FormItem/FormItem';
+
 import classes from './Form.module.css';
 
 export const Form = () => {
   const { handleChange, values, errors } = useForm();
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
 
   const loginHandle = () => {
-    login(values.login as string)
+    loginApi(values.login as string)
       .then((data) => {
         if (data[0].password === values.password) {
-          alert('logged in');
+          login(data[0]);
         } else {
           alert('Не правильный логин или пароль');
         }
       })
       .catch(() => {
         alert('Пользователь не найден!');
-      }).finally(() => {
-        setIsLoading(false);
       })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const signUpHandle = () => {
