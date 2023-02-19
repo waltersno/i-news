@@ -120,5 +120,17 @@
         }
       ]
     }
+  ],
+  "users": [
+    {
+      "login": "admin",
+      "password": "Qwertys1",
+      "role": "admin"
+    },
+    {
+      "login": "Almas",
+      "password": "Qwertys1",
+      "role": "user"
+    }
   ]
 }

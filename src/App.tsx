@@ -1,8 +1,15 @@
+import { Form } from 'features/auth/ui/AuthForm';
+import { AuthWrapper } from 'features/auth/ui/AuthWrapper/AppWrapper';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { MainLayout } from './app/layouts/MainLayout/MainLayout';
 import { NewsPage, MainPage } from './pages';
 
 const App = () => {
+  return (
+    <AuthWrapper>
+      <Form />
+    </AuthWrapper>
+  );
   return (
     <BrowserRouter>
       <Routes>
@@ -13,6 +20,6 @@ const App = () => {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

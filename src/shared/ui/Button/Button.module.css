@@ -1,0 +1,23 @@
+.button {
+  outline: none;
+  border: 1px solid #000;
+  padding: 0.8rem;
+  border-radius: 0.4rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.button:disabled {
+  border: 1px solid var(--gray15);
+  background-color: var(--gray5);
+  color: var(--gray20);
+  cursor: not-allowed;
+}
+
+.primary {
+  background-color: var(--blue10);
+}
+
+.danger {
+  background-color: var(--red10);
+}

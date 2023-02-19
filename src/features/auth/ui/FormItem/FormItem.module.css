@@ -1,0 +1,22 @@
+.formItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.input {
+  outline: none;
+  border: 1px solid #000;
+  padding: 0.8rem;
+  border-radius: 0.4rem;
+  background-color: var(--pink10);
+  flex-grow: 1;
+}
+
+.errorText {
+  font-size: 14px;
+  display: block;
+  top: 46px;
+  color: var(--red20);
+}
